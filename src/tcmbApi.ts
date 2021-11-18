@@ -1,6 +1,6 @@
 import axios from "axios";
 import xml2js from "xml2js";
-import moment, {Moment} from "moment";
+import moment, {Moment, MomentInput} from "moment";
 
 const tcmbApiUrlToday = 'https://www.tcmb.gov.tr/kurlar/today.xml';
 const tcmbApiUrlTimed = 'https://www.tcmb.gov.tr/kurlar/$year$month/$day$month$year.xml';
@@ -37,7 +37,8 @@ const parseData = async (rawData: string, doFilter=true): Promise<Currency[]> =>
     .then(currencies => currencies.map(currency => ({currency: currency.$.Kod, buy: currency.ForexBuying[0], sell: currency.ForexSelling[0]})))
     .catch(() => []);
 
-export const getCurrencies = async (momentDate: Moment): Promise<Currency[]> => {
+export const getCurrencies = async (date: MomentInput): Promise<Currency[]> => {
+  const momentDate = moment(date)
   let subs = 0;
   let currencies = [];
   let previousWorkdayMoment;
@@ -51,6 +52,6 @@ export const getCurrencies = async (momentDate: Moment): Promise<Currency[]> => 
   return currencies
 }
 
-export const getCurrency = async (momentDate: Moment, currencyCode: string): Promise<Currency> =>
-  await getCurrencies(momentDate)
+export const getCurrency = async (date: MomentInput, currencyCode: string): Promise<Currency> =>
+  await getCurrencies(date)
     .then(currencies => currencies.find(c => c.currency.toUpperCase() === currencyCode.toUpperCase()))
