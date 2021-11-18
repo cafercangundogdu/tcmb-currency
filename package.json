@@ -1,0 +1,25 @@
+{
+  "name": "tcmb-currency-rate",
+  "version": "0.1.0",
+  "description": "TCMB currency api",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepack": "rm -rf ./dist && yarn build"
+  },
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/index.dts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "moment": "^2.29.1",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.4"
+  }
+}
